@@ -1,0 +1,11 @@
+.devcontainer
+.pytest_cache
+.git
+.venv
+htmlcov
+.coverage
+.env
+.env.local
+.pylintrc
+Dockerfile
+README.md
