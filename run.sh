@@ -1,0 +1,1 @@
+source ./.venv/bin/activate && dapr run --resources-path ./dapr/components --app-id blog --app-port 8001 --dapr-http-port 3501 -- uvicorn app.main:create_app --host 127.0.0.1 --port 8001 --reload --env-file .env

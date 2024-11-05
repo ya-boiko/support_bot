@@ -1,0 +1,24 @@
+[project]
+name = "support-bot"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Vlad Boiko", email = "vboiko@shakuro.com"},
+]
+dependencies = [
+    "openai>=1.52.2",
+    "python-dotenv>=1.0.1",
+    "scikit-learn>=1.5.2",
+    "pymilvus>=2.4.9",
+    "fastapi>=0.115.4",
+    "uvicorn>=0.32.0",
+    "pydantic-settings>=2.6.0",
+    "svc @ file:///${PROJECT_ROOT}/pysvc",
+]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false

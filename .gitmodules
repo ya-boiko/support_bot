@@ -1,0 +1,4 @@
+[submodule "pysvc"]
+	path = pysvc
+	url = git@gitlab.com:shakurocom/portal/pysvc.git
+	branch = v3
