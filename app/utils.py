@@ -13,4 +13,4 @@ def get_project_root() -> Path:
 
 
 def get_env_file_path():
-    return os.getenv('ENV_FILE_PATH', f'{get_project_root()}/.env')
+    return os.getenv('ENV_FILE_PATH', f'{get_project_root()}/.env.dev.local')

@@ -1,11 +1,11 @@
 """Dependency injections."""
 
 from dependency_injector import containers, providers
-from pymilvus import MilvusClient
+from sqlalchemy import create_engine, orm
 
-from app.adapters.milvus.unit_of_work import UnitOfWork as MilvusUnitOfWork
+from app.adapters.unit_of_work import UnitOfWork
 from app.service_layer.handlers import mapping
-from svc.service_layer.message_bus import MessageBus
+from app.service_layer.message_bus import MessageBus
 
 
 class Container(containers.DeclarativeContainer):
@@ -16,16 +16,26 @@ class Container(containers.DeclarativeContainer):
     )
     config = providers.Configuration()
 
-    # milvus
+    database_engine = providers.Singleton(
+        create_engine,
+        config.database.url,
+        echo=True,
+        pool_recycle=3600,
+        pool_pre_ping=True,
+    )
 
-    milvus_client = providers.Singleton(MilvusClient, config.milvus.url)
+    session_factory = providers.Factory(
+        orm.sessionmaker,
+        autocommit=False,
+        autoflush=False,
+        bind=database_engine,
+        expire_on_commit=False,
+    )
 
-    # uow
-
-    milvus_uow = providers.Factory(MilvusUnitOfWork, milvus_client)
+    uow = providers.Factory(UnitOfWork, session_factory)
 
     # bus
 
     event_handlers = providers.Object(mapping.EVENT_HANDLERS)
     command_handlers = providers.Object(mapping.COMMAND_HANDLERS)
-    bus = providers.Singleton(MessageBus, milvus_uow, event_handlers, command_handlers)
+    bus = providers.Singleton(MessageBus, uow, event_handlers, command_handlers)

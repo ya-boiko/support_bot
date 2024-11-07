@@ -28,8 +28,8 @@ class DaprSettings(BaseModel):
     port: str = ''
 
 
-class MilvusSettings(BaseModel):
-    """Milvus db settings."""
+class DatabaseSettings(BaseModel):
+    """Database settings."""
 
     url: str = ''
 
@@ -45,4 +45,4 @@ class Settings(BaseSettings):
     app: ApplicationSettings = ApplicationSettings()
     openai: OpenAISettings = OpenAISettings()
     dapr: DaprSettings = DaprSettings()
-    milvus: MilvusSettings = MilvusSettings()
+    database: DatabaseSettings = DatabaseSettings()
