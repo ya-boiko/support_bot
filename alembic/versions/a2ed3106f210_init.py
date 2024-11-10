@@ -1,8 +1,8 @@
 """Init.
 
-Revision ID: b1d6927d0c3b
+Revision ID: a2ed3106f210
 Revises: 
-Create Date: 2024-11-07 02:01:21.309900
+Create Date: 2024-11-07 04:26:44.038523
 
 """
 from typing import Sequence, Union
@@ -13,7 +13,7 @@ import pgvector
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'b1d6927d0c3b'
+revision: str = 'a2ed3106f210'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,12 +24,11 @@ def upgrade() -> None:
     op.create_table('ticket_messages',
     sa.Column('id', sa.String().with_variant(sa.UUID(), 'postgresql'), nullable=False),
     sa.Column('message_vector', pgvector.sqlalchemy.vector.VECTOR(), nullable=False),
-    sa.Column('message', sa.Date(), nullable=False),
+    sa.Column('message', sa.String(), nullable=False),
     sa.Column('response', sa.String(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('message_vector')
     )
     # ### end Alembic commands ###
 
