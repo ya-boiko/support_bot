@@ -2,4 +2,4 @@
 
 
 class Command:
-    """Command"""
+    """Command."""
